@@ -283,3 +283,7 @@ hook.Add("EntityRemoved", "DarkRP_VarRemoval", function(ent) -- We use EntityRem
         privateDarkRPVars[ent] = nil
     end
 end)
+
+for k,v in pairs(player.GetAll()) do 
+	v:restorePlayerData()
+end
