@@ -814,6 +814,28 @@ local function enableBabyGod(ply)
     timer.Create(ply:EntIndex() .. "babygod", GAMEMODE.Config.babygodtime or 0, 1, fp{disableBabyGod, ply})
 end
 
+
+local sps = {
+Vector(-2230.057373, -1248.127075, -131.968750),
+Vector(-2229.349854, -1369.041016, -131.968750),
+Vector(-2228.614014, -1494.803345, -131.968750),
+Vector(-2227.835693, -1627.838257, -131.968750),
+Vector(-2227.128174, -1748.752197, -131.968750),
+Vector(-2111.091309, -1751.372681, -131.968750),
+Vector(-1982.937744, -1754.405640, -131.968750),
+Vector(-1864.474243, -1757.029663, -131.968750),
+Vector(-1738.737427, -1759.713989, -131.968750),
+Vector(-1589.319946, -1758.582520, -131.968750),
+Vector(-1591.491699, -1652.234497, -131.968750),
+Vector(-1595.256226, -1514.399170, -131.968750),
+Vector(-1584.311035, -1391.636597, -131.968750),
+Vector(-1692.634766, -1377.906738, -131.968750),
+Vector(-1823.237915, -1376.131348, -131.968750),
+Vector(-1956.265137, -1374.322998, -131.968750),
+Vector(-2084.444336, -1372.580566, -131.968750),
+}
+local x = 0
+
 function GM:PlayerSpawn(ply)
     if not ply.DarkRPInitialised then
         DarkRP.errorNoHalt(
@@ -873,7 +895,19 @@ function GM:PlayerSpawn(ply)
     hook.Call("PlayerSetModel", self, ply)
 
     local ent, pos = hook.Call("PlayerSelectSpawn", self, ply)
-    ply:SetPos(pos or ent:GetPos())
+	
+	x = x + 1
+	if x == #sps then
+		x = 1
+	end
+	
+	local _, hull = ply:GetHull()
+
+	local InitialPosition = DarkRP.findEmptyPos(sps[x], {ply}, 600, 20, hull)
+	ply:SetPos(InitialPosition)
+	--ply:SetEyeAngles(Angle(0,90,0))
+
+    --ply:SetPos(pos or ent:GetPos())
 
     if jobTable.PlayerSpawn then
         jobTable.PlayerSpawn(ply)

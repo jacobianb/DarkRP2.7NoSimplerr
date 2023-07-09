@@ -1,5 +1,4 @@
 local meta = FindMetaTable("Player")
-
 local DarkRPVars = {}
 local privateDarkRPVars = {}
 
